@@ -10,8 +10,6 @@ interface DesignerProps {
 }
 
 const Designer = (props: DesignerProps) => {
-  useEffect(() => {}, []);
-
   return (
     <div className="designer">
       <Header />

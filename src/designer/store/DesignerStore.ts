@@ -55,6 +55,12 @@ export class DesignerStore {
     console.log(`toJs`, toJS(this.components));
   }
 
+  unActive() {
+    if (this.activeComponent) {
+      this.activeComponent.active = false;
+    }
+  }
+
   getIdx(id: string) {
     return this.components.findIndex((item) => item.id === id);
   }

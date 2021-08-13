@@ -2,12 +2,14 @@ import { Button } from 'antd';
 import React from 'react';
 import './index.less';
 import { useHistory } from 'react-router-dom';
+import { designerStore } from '@/designer/store/DesignerStore';
 interface Props {}
 
 const Header = (props: Props) => {
   const history = useHistory();
 
   const handlePreviewClick = () => {
+    designerStore.unActive();
     history.push('/preview');
   };
 
