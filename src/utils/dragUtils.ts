@@ -8,18 +8,6 @@ export const getDragComponentType = (e: React.DragEvent) => {
   return getDragMessage(e, 'componentType') as ComponentType;
 };
 
-export const canDrop = (dragEvent: DragEvent, box: HTMLElement) => {
-  if (
-    dragEvent.left > box.offsetLeft &&
-    dragEvent.left < box.offsetLeft + box.offsetWidth &&
-    dragEvent.top > box.offsetTop &&
-    dragEvent.top < box.offsetTop + box.offsetHeight
-  ) {
-    return true;
-  }
-  return false;
-};
-
 export const getSelector = (id: string) => {
   return document.getElementById(`selector-${id}`) as HTMLElement;
 };

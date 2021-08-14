@@ -7,6 +7,8 @@ import {
   Input,
   TablePage,
   Container,
+  Line,
+  Column,
 } from '@/components';
 type MappingItem = {
   [key in ComponentType]: (props: any) => React.ReactElement;
@@ -20,4 +22,6 @@ export const MAPPING_CONFIG: MappingItem = {
   textArea: TextArea,
   tablePage: TablePage,
   container: Container,
+  line: Line,
+  column: Column,
 };

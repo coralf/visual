@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 
-class DragEvent {
+class DesignEvent {
   startClientX: number = 0;
   startClientY: number = 0;
   startLeft: number = 0;
@@ -10,10 +10,6 @@ class DragEvent {
   width: number = 0;
   height: number = 0;
   state: 'moving' | 'start' | 'end' = 'end';
-
-  constructor() {
-    makeAutoObservable(this);
-  }
 
   get isDragging() {
     return this.state === 'moving';
@@ -62,6 +58,13 @@ class DragEvent {
   draggingEnd() {
     this.state = 'end';
   }
+
+  getCoordinate() {
+    return {
+      left: this.left,
+      top: this.top,
+    };
+  }
 }
 
-export default DragEvent;
+export default new DesignEvent();

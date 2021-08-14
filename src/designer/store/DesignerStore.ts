@@ -1,6 +1,6 @@
 import { genUUID } from '@/utils/commonUtils';
 import { makeAutoObservable, observable, toJS } from 'mobx';
-import DragEvent from '@/designer/store/DragEvent';
+// import DragEvent from '@/designer/store/DragEvent';
 
 export type ComponentType =
   | 'text'
@@ -9,7 +9,9 @@ export type ComponentType =
   | 'switch'
   | 'select'
   | 'tablePage'
-  | 'container';
+  | 'container'
+  | 'line'
+  | 'column';
 
 export interface Component {
   id: string;
@@ -18,7 +20,8 @@ export interface Component {
   props: object;
   children?: Component[];
   active?: boolean;
-  dragEvent: DragEvent;
+  top: number;
+  left: number;
 }
 
 export class DesignerStore {
@@ -41,7 +44,8 @@ export class DesignerStore {
       id: genUUID(),
       type,
       props: {},
-      dragEvent: new DragEvent(),
+      top: 0,
+      left: 0,
     });
   }
 
@@ -65,15 +69,11 @@ export class DesignerStore {
     return this.components.findIndex((item) => item.id === id);
   }
 
-  moveTo(source: Component, target: Component) {
-    const idx = this.getIdx(target.id);
-    this.components.splice(this.getIdx(source.id), 1);
-    let right = this.components.length;
-    while (right > idx) {
-      this.components[right] = this.components[right - 1];
-      right--;
+  moving(left: number, top: number) {
+    if (this.activeComponent) {
+      this.activeComponent.left = left;
+      this.activeComponent.top = top;
     }
-    this.components[right] = source;
   }
 }
 

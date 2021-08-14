@@ -1,12 +1,18 @@
 import React, { DragEventHandler, SyntheticEvent } from 'react';
 import './index.less';
-import { AiOutlineContainer, AiOutlineTable } from 'react-icons/ai';
+import {
+  AiOutlineBarChart,
+  AiOutlineContainer,
+  AiOutlineLineChart,
+  AiOutlineTable,
+} from 'react-icons/ai';
 import { BsTextIndentLeft } from 'react-icons/bs';
 import { GrTextAlignCenter } from 'react-icons/gr';
 import { HiOutlineSelector } from 'react-icons/hi';
 import { IoMdSwitch } from 'react-icons/io';
 import { DragEvent } from 'react';
 import { ComponentType } from '@/designer/store/DesignerStore';
+import { CgFormatText } from 'react-icons/cg';
 
 interface Props {}
 
@@ -47,6 +53,11 @@ const components: ComponentsDragConfig[] = [
         name: '开关',
         icon: IoMdSwitch,
       },
+      {
+        type: 'text',
+        name: '文本',
+        icon: CgFormatText,
+      },
     ],
   },
   {
@@ -57,6 +68,22 @@ const components: ComponentsDragConfig[] = [
         type: 'container',
         name: '普通容器',
         icon: AiOutlineContainer,
+      },
+    ],
+  },
+  {
+    type: 'chart',
+    name: '图表',
+    items: [
+      {
+        type: 'line',
+        name: '折线图',
+        icon: AiOutlineLineChart,
+      },
+      {
+        type: 'column',
+        name: '柱状图',
+        icon: AiOutlineBarChart,
       },
     ],
   },

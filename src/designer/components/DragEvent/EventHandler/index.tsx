@@ -1,5 +1,4 @@
 import {
-  canDrop,
   findSelector,
   getSelector,
   selectorIdToComponentId,
@@ -8,20 +7,21 @@ import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 import { IoMdReturnLeft } from 'react-icons/io';
 import { Component, designerStore } from '../../../store/DesignerStore';
+import DesignEvent from '../../../store/DragEvent';
 
 interface EventHandlerProps {
   children: React.ReactElement;
 }
+
 const EventHandler = ({ children }: EventHandlerProps) => {
-  const dragRootRef = useRef<HTMLDivElement>(null);
-  const activeComponent = designerStore.activeComponent;
+  const { activeComponent } = designerStore;
 
   const handleMouseDown = (e: React.MouseEvent) => {
     const selector = findSelector(e.target as HTMLElement);
     if (!selector) return;
     designerStore.active(selectorIdToComponentId(selector));
     const { clientX, clientY } = e;
-    activeComponent?.dragEvent.draggingStart({
+    DesignEvent.draggingStart({
       clientX,
       clientY,
       startLeft: selector.offsetLeft,
@@ -32,36 +32,21 @@ const EventHandler = ({ children }: EventHandlerProps) => {
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (activeComponent?.dragEvent.state !== 'end') {
-      activeComponent?.dragEvent.draggingMove({
+    if (DesignEvent.state !== 'end') {
+      DesignEvent.draggingMove({
         clientX: e.clientX,
         clientY: e.clientY,
       });
-    }
-  };
-
-  const getDropEle = (activeComponent: Component) => {
-    for (let i = 0; i < designerStore.components.length; i++) {
-      const component = designerStore.components[i];
-      if (activeComponent.id === component.id) continue;
-      if (canDrop(activeComponent?.dragEvent, getSelector(component.id))) {
-        return component;
-      }
+      designerStore.moving(DesignEvent.left, DesignEvent.top);
     }
   };
 
   const handleMouseUp = (e: React.MouseEvent) => {
-    if (!activeComponent) return;
-    const component = getDropEle(activeComponent);
-    if (component) {
-      designerStore.moveTo(activeComponent, component);
-    }
-    activeComponent?.dragEvent.draggingEnd();
+    DesignEvent.draggingEnd();
   };
 
   return (
     <div
-      ref={dragRootRef}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
