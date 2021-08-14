@@ -11,7 +11,7 @@ interface InternalMenu extends Menu {
   active?: boolean;
 }
 
-const ACTIVE_COLOR = '#1890ff';
+const ACTIVE_COLOR = '#91d5ff';
 const OperateMenus = ({
   defaultActiveKey,
   menus,
@@ -63,7 +63,12 @@ const OperateMenus = ({
           key={item.key}
           onClick={() => handleClick(item)}
         >
-          {<item.icon size={24} color={item.active ? ACTIVE_COLOR : ''} />}
+          {
+            <item.icon
+              size={24}
+              color={item.active ? ACTIVE_COLOR : '#1890ff'}
+            />
+          }
         </div>
       ))}
     </div>
