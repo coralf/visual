@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Line as G2Line } from '@antv/g2plot';
-interface Props {}
+interface Props {
+  id: string;
+}
 
 const Line = (props: Props) => {
   const init = () => {
@@ -16,7 +18,7 @@ const Line = (props: Props) => {
       { year: '1999', value: 13 },
       { year: '1999', value: 8 },
     ];
-    const linePlot = new G2Line('line', {
+    const linePlot = new G2Line(props.id, {
       data,
       xField: 'year',
       yField: 'value',
@@ -29,7 +31,7 @@ const Line = (props: Props) => {
   useEffect(() => {
     init();
   }, []);
-  return <div id="line"></div>;
+  return <div id={props.id}></div>;
 };
 
 export default Line;

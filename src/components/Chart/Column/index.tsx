@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { Column as G2Column } from '@antv/g2plot';
-interface Props {}
+interface Props {
+  id: string;
+}
 
 const Column = (props: Props) => {
   const init = () => {
@@ -96,7 +98,7 @@ const Column = (props: Props) => {
         type: 'Bor',
       },
     ];
-    const stackedColumnPlot = new G2Column('column', {
+    const stackedColumnPlot = new G2Column(props.id, {
       data,
       isStack: true,
       xField: 'year',
@@ -119,11 +121,13 @@ const Column = (props: Props) => {
     stackedColumnPlot.render();
   };
 
+  console.log(`props`, props);
+
   useEffect(() => {
     init();
   }, []);
 
-  return <div id="column"></div>;
+  return <div id={props.id}></div>;
 };
 
 export default Column;

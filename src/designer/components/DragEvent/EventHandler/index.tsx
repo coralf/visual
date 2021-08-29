@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite';
 import { useRef } from 'react';
 import { IoMdReturnLeft } from 'react-icons/io';
 import { Component, designerStore } from '../../../store/DesignerStore';
-import DesignEvent from '../../../store/DragEvent';
+import DesignEvent from '../../../event/DragEvent';
 
 interface EventHandlerProps {
   children: React.ReactElement;

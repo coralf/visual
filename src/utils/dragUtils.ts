@@ -1,5 +1,5 @@
 import { Component, ComponentType } from '@/designer/store/DesignerStore';
-import DragEvent from '@/designer/store/DragEvent';
+import DragEvent from '@/designer/event/DragEvent';
 export const getDragMessage = (e: React.DragEvent, key: string) => {
   return e.dataTransfer?.getData(key);
 };

@@ -1,7 +1,7 @@
 import { Component, designerStore } from '@/designer/store/DesignerStore';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { BiMove } from 'react-icons/bi';
 import './index.less';
 
@@ -14,6 +14,17 @@ const Selector = ({ component, children }: SelectorProps) => {
   const selectorRef = useRef<HTMLDivElement>(null);
   const { activeComponent } = designerStore;
   const box = selectorRef.current as HTMLDivElement;
+
+  useEffect(() => {
+    const rect = document
+      .getElementById('selector-' + component.id)
+      ?.getBoundingClientRect();
+    designerStore?.init(component, {
+      width: rect?.width || 0,
+      height: rect?.height || 0,
+    });
+  }, []);
+
   return (
     <div
       ref={selectorRef}
@@ -23,7 +34,7 @@ const Selector = ({ component, children }: SelectorProps) => {
         left: component.left,
         top: component.top,
         zIndex: 999,
-        cursor: 'all-scroll',
+        cursor: 'move',
         boxSizing: 'border-box',
         border: component.active ? '1px solid #40a9ff' : '',
       }}

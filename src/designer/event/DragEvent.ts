@@ -1,5 +1,3 @@
-import { makeAutoObservable } from 'mobx';
-
 class DesignEvent {
   startClientX: number = 0;
   startClientY: number = 0;

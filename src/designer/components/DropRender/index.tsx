@@ -9,10 +9,7 @@ import { Component, designerStore } from '../../store/DesignerStore';
 import './index.less';
 interface Props {}
 const DropRender = (props: Props) => {
-  const [size, setSize] = useState<{
-    width: number;
-    height: number;
-  }>();
+  const ref = useRef<HTMLDivElement>(null);
 
   const handleDrop: DragEventHandler = (e) => {
     e.preventDefault();
@@ -25,8 +22,12 @@ const DropRender = (props: Props) => {
   };
 
   const updateSize = () => {
-    const width = document.getElementById('dropRender')?.offsetWidth || 0;
-    setSize({ width, height: Math.round(width * 0.56) });
+    const width = ref.current?.offsetWidth;
+    if (!width) return;
+    designerStore.screen.width = width;
+    designerStore.screen.height = Math.round(
+      width / designerStore.screen.ratio
+    );
   };
 
   useEffect(() => {
@@ -38,11 +39,13 @@ const DropRender = (props: Props) => {
 
   return (
     <div
-      id="dropRender"
+      ref={ref}
       className="drop-render"
       onDrop={handleDrop}
       onDragOver={handleDragOver}
-      style={{ height: size?.height }}
+      style={{
+        height: designerStore.screen.height,
+      }}
     >
       <EventHandler>
         <Render components={designerStore.components} />
@@ -51,4 +54,4 @@ const DropRender = (props: Props) => {
   );
 };
 
-export default DropRender;
+export default observer(DropRender);
