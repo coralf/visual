@@ -1,3 +1,4 @@
+import { DIRECTION } from '@/config/componentConfig';
 import { Component, designerStore } from '@/designer/store/DesignerStore';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
@@ -12,9 +13,6 @@ interface SelectorProps {
 
 const Selector = ({ component, children }: SelectorProps) => {
   const selectorRef = useRef<HTMLDivElement>(null);
-  const { activeComponent } = designerStore;
-  const box = selectorRef.current as HTMLDivElement;
-
   useEffect(() => {
     const rect = document
       .getElementById('selector-' + component.id)
@@ -25,6 +23,8 @@ const Selector = ({ component, children }: SelectorProps) => {
     });
   }, []);
 
+  const rect = selectorRef?.current?.getBoundingClientRect();
+
   return (
     <div
       ref={selectorRef}
@@ -33,12 +33,21 @@ const Selector = ({ component, children }: SelectorProps) => {
         position: 'absolute',
         left: component.left,
         top: component.top,
+        width: component.width || rect?.width,
+        height: component.height || rect?.height,
         zIndex: 999,
         cursor: 'move',
         boxSizing: 'border-box',
         border: component.active ? '1px solid #40a9ff' : '',
       }}
     >
+      {DIRECTION.map((d) => (
+        <div
+          className={classNames('control-point', `point-${d}`)}
+          id={d}
+          key={d}
+        ></div>
+      ))}
       {children}
     </div>
   );

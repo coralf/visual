@@ -1,6 +1,5 @@
 import { genUUID } from '@/utils/commonUtils';
-import { makeAutoObservable, observable, toJS } from 'mobx';
-// import DragEvent from '@/designer/store/DragEvent';
+import { makeAutoObservable, toJS } from 'mobx';
 
 export type ComponentType =
   | 'text'
@@ -22,6 +21,19 @@ export interface Component {
   active?: boolean;
   top: number;
   left: number;
+  width: number;
+  height: number;
+}
+
+export interface PartialComponent {
+  type: ComponentType;
+  top: number;
+  left: number;
+}
+
+export interface ComponentReact {
+  left: number;
+  top: number;
   width: number;
   height: number;
 }
@@ -73,16 +85,14 @@ export class DesignerStore {
     component.height = height;
   }
 
-  addComponent(type: ComponentType) {
+  addComponent(component: Pick<Component, keyof PartialComponent>) {
     const id = genUUID();
     this.components.push({
+      ...component,
       id,
-      type,
       props: {
         id,
       },
-      top: 0,
-      left: 0,
       width: 0,
       height: 0,
     });
@@ -122,6 +132,20 @@ export class DesignerStore {
       ),
       1
     );
+  }
+
+  updateActiveComponentRect({
+    left,
+    top,
+    width,
+    height,
+  }: Partial<ComponentReact>) {
+    if (!this.activeComponent) return;
+
+    left && (this.activeComponent.left = left);
+    top && (this.activeComponent.top = top);
+    width && (this.activeComponent.width = width);
+    height && (this.activeComponent.height = height);
   }
 }
 

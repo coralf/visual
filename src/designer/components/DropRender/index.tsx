@@ -1,20 +1,28 @@
 import Render from '@/render';
 import { getDragComponentType } from '@/utils/dragUtils';
-import classNames from 'classnames';
-import { observable } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import React, { DragEventHandler, useEffect, useRef, useState } from 'react';
+import { DragEventHandler, useEffect, useRef } from 'react';
 import EventHandler from '../DragEvent/EventHandler';
-import { Component, designerStore } from '../../store/DesignerStore';
+import { designerStore } from '../../store/DesignerStore';
+import DragEvent from '@/designer/event/DragEvent';
 import './index.less';
+
 interface Props {}
 const DropRender = (props: Props) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const handleDrop: DragEventHandler = (e) => {
     e.preventDefault();
-    const componentType = getDragComponentType(e);
-    designerStore.addComponent(componentType);
+    const type = getDragComponentType(e);
+    DragEvent.draggingMove({
+      clientX: e.clientX,
+      clientY: e.clientY,
+    });
+    designerStore.addComponent({
+      left: DragEvent.left,
+      top: DragEvent.top,
+      type,
+    });
   };
 
   const handleDragOver: DragEventHandler = (e) => {

@@ -1,5 +1,6 @@
 import { Component, ComponentType } from '@/designer/store/DesignerStore';
 import DragEvent from '@/designer/event/DragEvent';
+import { DIRECTION } from '@/config/componentConfig';
 export const getDragMessage = (e: React.DragEvent, key: string) => {
   return e.dataTransfer?.getData(key);
 };
@@ -25,4 +26,8 @@ export const findSelector = (target: HTMLElement) => {
 
 export const selectorIdToComponentId = (ele: HTMLElement) => {
   return ele?.id?.replace('selector-', '');
+};
+
+export const getDragAction = (id: string) => {
+  return DIRECTION.includes(id) ? id : 'move';
 };
