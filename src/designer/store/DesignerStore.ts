@@ -114,6 +114,15 @@ export class DesignerStore {
       this.activeComponent.top = top;
     }
   }
+
+  deleteActiveComponent() {
+    this.components.splice(
+      this.components?.findIndex(
+        (item) => item.id === this.activeComponent?.id
+      ),
+      1
+    );
+  }
 }
 
 export const designerStore = new DesignerStore();

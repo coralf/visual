@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Column as G2Column } from '@antv/g2plot';
+import { chartSize } from '@/config/componentConfig';
 interface Props {
   id: string;
 }
@@ -120,8 +121,6 @@ const Column = (props: Props) => {
     });
     stackedColumnPlot.render();
   };
-
-  console.log(`props`, props);
 
   useEffect(() => {
     init();

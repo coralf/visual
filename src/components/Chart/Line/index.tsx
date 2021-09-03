@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Line as G2Line } from '@antv/g2plot';
+import { chartSize } from '@/config/componentConfig';
 interface Props {
   id: string;
 }

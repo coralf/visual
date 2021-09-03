@@ -35,6 +35,12 @@ const DropRender = (props: Props) => {
     window.addEventListener('resize', () => {
       updateSize();
     });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Delete') {
+        designerStore.deleteActiveComponent();
+      }
+    });
   }, []);
 
   return (
