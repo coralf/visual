@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite';
 import { DragEventHandler, useEffect, useRef } from 'react';
 import EventHandler from '../DragEvent/EventHandler';
 import { designerStore } from '../../store/DesignerStore';
-import DragEvent from '@/designer/event/DragEvent';
 import './index.less';
 
 interface Props {}
@@ -16,8 +15,8 @@ const DropRender = (props: Props) => {
     const type = getDragComponentType(e);
     const rect = ref.current?.getBoundingClientRect() as DOMRect;
     designerStore.addComponent({
-      left: e.clientX - rect.left,
-      top: e.clientY - rect.top,
+      left: e.clientX * designerStore.screen.ratio - rect.left,
+      top: e.clientY * designerStore.screen.ratio - rect.top,
       type,
     });
   };
@@ -26,21 +25,7 @@ const DropRender = (props: Props) => {
     e.preventDefault();
   };
 
-  const updateSize = () => {
-    const width = ref.current?.offsetWidth;
-    if (!width) return;
-    designerStore.screen.width = width;
-    designerStore.screen.height = Math.round(
-      width / designerStore.screen.ratio
-    );
-  };
-
   useEffect(() => {
-    updateSize();
-    window.addEventListener('resize', () => {
-      updateSize();
-    });
-
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Delete') {
         designerStore.deleteActiveComponent();
@@ -49,18 +34,24 @@ const DropRender = (props: Props) => {
   }, []);
 
   return (
-    <div
-      ref={ref}
-      className="drop-render"
-      onDrop={handleDrop}
-      onDragOver={handleDragOver}
-      style={{
-        height: designerStore.screen.height,
-      }}
-    >
-      <EventHandler>
-        <Render components={designerStore.components} />
-      </EventHandler>
+    <div className="drop-render-layout">
+      <div
+        ref={ref}
+        className="drop-render"
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        style={{
+          width: designerStore.screen.width,
+          height: designerStore.screen.height,
+          zoom: designerStore.screen.zoom,
+          top: `calc(50% - ${designerStore.screen.height / 2}px)`,
+          left: `calc(50% - ${designerStore.screen.width / 2}px)`,
+        }}
+      >
+        <EventHandler>
+          <Render components={designerStore.components} />
+        </EventHandler>
+      </div>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import { ComponentType } from '@/designer/store/DesignerStore';
 import {
   Text,
   TextArea,
@@ -10,6 +9,7 @@ import {
   Line,
   Column,
 } from '@/components';
+import { ComponentType } from '@/designer/store/types';
 type MappingItem = {
   [key in ComponentType]: (props: any) => React.ReactElement;
 };
@@ -20,7 +20,7 @@ export const MAPPING_CONFIG: MappingItem = {
   switch: Switch,
   text: Text,
   textArea: TextArea,
-  tablePage: Table,
+  table: Table,
   container: Container,
   line: Line,
   column: Column,

@@ -1,9 +1,9 @@
-import { Component } from '@/designer/store/DesignerStore';
 import { observer } from 'mobx-react-lite';
 import { MAPPING_CONFIG } from './mappingConfig';
 import './index.less';
 import Selector from '@/designer/components/DragEvent/Selector';
 import { toJS } from 'mobx';
+import { Component } from '@/designer/store/types';
 
 interface Props {
   components: Component[];

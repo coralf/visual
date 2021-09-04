@@ -18,8 +18,6 @@ class DragEvent {
   clientY: number = 0;
   startLeft: number = 0;
   startTop: number = 0;
-  left: number = 0;
-  top: number = 0;
   width: number = 0;
   height: number = 0;
   state: 'moving' | 'start' | 'end' = 'end';
@@ -59,8 +57,6 @@ class DragEvent {
     this.startClientY = clientY;
     this.startLeft = startLeft;
     this.startTop = startTop;
-    this.left = startLeft;
-    this.top = startTop;
     this.state = 'start';
     this.width = width;
     this.height = height;
@@ -75,12 +71,15 @@ class DragEvent {
   }
 
   triggerDragAction() {
-    const offsetY = this.clientY - this.startClientY;
-    const offsetX = this.clientX - this.startClientX;
-    const left = offsetX + this.startLeft;
-    const top = offsetY + this.startTop;
+    const offsetY =
+      (this.clientY - this.startClientY) * designerStore.screen.ratio;
+    const offsetX =
+      (this.clientX - this.startClientX) * designerStore.screen.ratio;
+
     switch (this.action) {
       case 'move':
+        const left = offsetX + this.startLeft;
+        const top = offsetY + this.startTop;
         designerStore.updateActiveComponentRect({
           left,
           top,
@@ -88,14 +87,14 @@ class DragEvent {
         break;
       case 'n':
         designerStore.updateActiveComponentRect({
-          top: this.top + offsetY,
+          top: this.startTop + offsetY,
           height: this.height - offsetY,
         });
         break;
 
       case 'ne':
         designerStore.updateActiveComponentRect({
-          top: this.top + offsetY,
+          top: this.startTop + offsetY,
           width: this.width + offsetX, //offsetY
           height: this.height - offsetY,
         });
@@ -124,23 +123,23 @@ class DragEvent {
         designerStore.updateActiveComponentRect({
           height: this.height + offsetY,
           width: this.width - offsetX,
-          left: this.left + offsetX,
+          left: this.startLeft + offsetX,
         });
         break;
 
       case 'w':
         designerStore.updateActiveComponentRect({
           width: this.width - offsetX,
-          left: this.left + offsetX,
+          left: this.startLeft + offsetX,
         });
         break;
 
       case 'nw':
         designerStore.updateActiveComponentRect({
           height: this.height - offsetY,
-          top: this.top + offsetY,
+          top: this.startTop + offsetY,
           width: this.width - offsetX,
-          left: this.left + offsetX,
+          left: this.startLeft + offsetX,
         });
         break;
 
@@ -151,13 +150,6 @@ class DragEvent {
 
   draggingEnd() {
     this.state = 'end';
-  }
-
-  getCoordinate() {
-    return {
-      left: this.left,
-      top: this.top,
-    };
   }
 }
 

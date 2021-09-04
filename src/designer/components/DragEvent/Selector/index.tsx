@@ -1,9 +1,9 @@
 import { DIRECTION } from '@/config/componentConfig';
-import { Component, designerStore } from '@/designer/store/DesignerStore';
+import { designerStore } from '@/designer/store/DesignerStore';
+import { Component } from '@/designer/store/types';
 import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { useEffect, useRef } from 'react';
-import { BiMove } from 'react-icons/bi';
 import './index.less';
 
 interface SelectorProps {

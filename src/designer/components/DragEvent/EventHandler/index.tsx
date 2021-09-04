@@ -1,13 +1,10 @@
 import {
   findSelector,
   getDragAction,
-  getSelector,
   selectorIdToComponentId,
 } from '@/utils/dragUtils';
 import { observer } from 'mobx-react-lite';
-import { useCallback, useRef } from 'react';
-import { IoMdReturnLeft } from 'react-icons/io';
-import { Component, designerStore } from '../../../store/DesignerStore';
+import { designerStore } from '../../../store/DesignerStore';
 import DesignEvent, { DragAction } from '../../../event/DragEvent';
 
 interface EventHandlerProps {

@@ -1,4 +1,3 @@
-import { Component } from '@/designer/store/DesignerStore';
 import React from 'react';
 import { TextProps } from '../types';
 

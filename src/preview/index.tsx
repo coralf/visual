@@ -17,9 +17,6 @@ const Preview = (props: Props) => {
 
   useEffect(() => {
     updateRatio();
-    window.addEventListener('resize', () => {
-      updateRatio();
-    });
   }, []);
 
   return (

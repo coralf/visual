@@ -1,5 +1,4 @@
 import React, { DragEventHandler, SyntheticEvent } from 'react';
-import './index.less';
 import {
   AiOutlineBarChart,
   AiOutlineContainer,
@@ -11,8 +10,9 @@ import { GrTextAlignCenter } from 'react-icons/gr';
 import { HiOutlineSelector } from 'react-icons/hi';
 import { IoMdSwitch } from 'react-icons/io';
 import { DragEvent } from 'react';
-import { ComponentType } from '@/designer/store/DesignerStore';
 import { CgFormatText } from 'react-icons/cg';
+import './index.less';
+import { ComponentType } from '@/designer/store/types';
 
 interface Props {}
 
@@ -59,7 +59,7 @@ const components: ComponentsDragConfig[] = [
         icon: CgFormatText,
       },
       {
-        type: 'tablePage',
+        type: 'table',
         name: '表格',
         icon: AiOutlineTable,
       },

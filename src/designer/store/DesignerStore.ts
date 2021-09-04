@@ -1,69 +1,21 @@
 import { ChartProps, TextProps } from '@/components/types';
+import { DEFAULT_SCREEN } from '@/config/componentConfig';
 import { genUUID } from '@/utils/commonUtils';
 import { makeAutoObservable, toJS } from 'mobx';
-
-export type ComponentType =
-  | 'text'
-  | 'input'
-  | 'textArea'
-  | 'switch'
-  | 'select'
-  | 'tablePage'
-  | 'container'
-  | 'line'
-  | 'column';
-
-export type Props = TextProps | ChartProps;
-
-export interface Component {
-  id: string;
-  name?: string;
-  type: ComponentType;
-  props: Props;
-  children?: Component[];
-  active?: boolean;
-  top: number;
-  left: number;
-  width: number;
-  height: number;
-}
-
-export interface PartialComponent {
-  type: ComponentType;
-  top: number;
-  left: number;
-}
-
-export interface ComponentReact {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-}
-
-export interface Screen {
-  width: number;
-  height: number;
-  zoom: number;
-  ratio: number;
-}
+import { Component, ComponentReact, ComponentType } from './types';
+import { Screen } from './types';
 
 export class DesignerStore {
   components: Component[] = [];
   screen: Screen = {
-    width: window.innerWidth,
-    height: window.innerHeight,
-    zoom: 1,
-    ratio: 1, // 屏幕宽高比（width/height）
+    width: DEFAULT_SCREEN.WIDTH,
+    height: DEFAULT_SCREEN.HEIGHT,
+    zoom: DEFAULT_SCREEN.ZOOM,
+    ratio: DEFAULT_SCREEN.RATIO,
   };
 
   constructor() {
     makeAutoObservable(this);
-    this.initViewPointRatio();
-  }
-
-  initViewPointRatio() {
-    this.screen.ratio = document.body.offsetWidth / document.body.offsetHeight;
   }
 
   get(id: string) {
@@ -88,7 +40,7 @@ export class DesignerStore {
     component.height = height;
   }
 
-  addComponent(component: Pick<Component, keyof PartialComponent>) {
+  addComponent(component: { type: ComponentType; left: number; top: number }) {
     const id = genUUID();
     this.components.push({
       ...component,
@@ -122,13 +74,6 @@ export class DesignerStore {
     return this.components.findIndex((item) => item.id === id);
   }
 
-  moving(left: number, top: number) {
-    if (this.activeComponent) {
-      this.activeComponent.left = left;
-      this.activeComponent.top = top;
-    }
-  }
-
   deleteActiveComponent() {
     this.components.splice(
       this.components?.findIndex(
@@ -153,6 +98,7 @@ export class DesignerStore {
       this.activeComponent.width = width;
       this.activeComponent.props.style.width = width;
     }
+
     if (height) {
       this.activeComponent.height = height;
       this.activeComponent.props.style.height = height;
