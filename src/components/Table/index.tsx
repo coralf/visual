@@ -1,10 +1,10 @@
-import { Table } from 'antd';
+import { Table as AntdTable } from 'antd';
 import { title } from 'process';
 import React from 'react';
 
 interface Props {}
 
-const TablePage = (props: Props) => {
+const Table = (props: Props) => {
   const columns = [
     { title: 'id', dataIndex: 'id' },
     { title: 'name', dataIndex: 'name' },
@@ -12,9 +12,9 @@ const TablePage = (props: Props) => {
 
   return (
     <div>
-      <Table columns={columns} {...props}></Table>
+      <AntdTable columns={columns} {...props}></AntdTable>
     </div>
   );
 };
 
-export default TablePage;
+export default Table;

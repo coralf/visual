@@ -2,7 +2,7 @@ import Container from './Container';
 import Input from './Input';
 import Select from './Select';
 import Switch from './Switch';
-import TablePage from './TablePage';
+import Table from './Table';
 import Text from './Text';
 import TextArea from './TextArea';
 import { Column, Line } from './Chart';
@@ -13,7 +13,7 @@ export {
   Select,
   Switch,
   TextArea,
-  TablePage,
+  Table,
   Line,
   Container,
   Column,

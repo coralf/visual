@@ -96,7 +96,7 @@ class DragEvent {
       case 'ne':
         designerStore.updateActiveComponentRect({
           top: this.top + offsetY,
-          width: this.width + offsetX,
+          width: this.width + offsetX, //offsetY
           height: this.height - offsetY,
         });
         break;

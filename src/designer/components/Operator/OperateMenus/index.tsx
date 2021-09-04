@@ -63,12 +63,7 @@ const OperateMenus = ({
           key={item.key}
           onClick={() => handleClick(item)}
         >
-          {
-            <item.icon
-              size={24}
-              color={item.active ? ACTIVE_COLOR : '#1890ff'}
-            />
-          }
+          <item.icon size={24} color={item.active ? ACTIVE_COLOR : '#1890ff'} />
         </div>
       ))}
     </div>

@@ -17,20 +17,23 @@ interface EventHandlerProps {
 const EventHandler = ({ children }: EventHandlerProps) => {
   const handleMouseDown = (e: React.MouseEvent) => {
     const selector = findSelector(e.target as HTMLElement);
-    if (!selector) return;
-    designerStore.active(selectorIdToComponentId(selector));
-    const { clientX, clientY } = e;
-    DesignEvent.draggingStart(
-      getDragAction((e.target as HTMLElement)?.id) as DragAction,
-      {
-        clientX,
-        clientY,
-        startLeft: selector.offsetLeft,
-        startTop: selector.offsetTop,
-        width: selector.offsetWidth,
-        height: selector.offsetHeight,
-      }
-    );
+    if (!selector) {
+      designerStore.unActive();
+    } else {
+      designerStore.active(selectorIdToComponentId(selector));
+      const { clientX, clientY } = e;
+      DesignEvent.draggingStart(
+        getDragAction((e.target as HTMLElement)?.id) as DragAction,
+        {
+          clientX,
+          clientY,
+          startLeft: selector.offsetLeft,
+          startTop: selector.offsetTop,
+          width: selector.offsetWidth,
+          height: selector.offsetHeight,
+        }
+      );
+    }
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {

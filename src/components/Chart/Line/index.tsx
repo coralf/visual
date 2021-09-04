@@ -1,11 +1,8 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Line as G2Line } from '@antv/g2plot';
-import { chartSize } from '@/config/componentConfig';
-interface Props {
-  id: string;
-}
+import { ChartProps } from '@/components/types';
 
-const Line = (props: Props) => {
+const Line = ({ id, style }: ChartProps) => {
   const init = () => {
     const data = [
       { year: '1991', value: 3 },
@@ -19,7 +16,7 @@ const Line = (props: Props) => {
       { year: '1999', value: 13 },
       { year: '1999', value: 8 },
     ];
-    const linePlot = new G2Line(props.id, {
+    const linePlot = new G2Line(id, {
       data,
       xField: 'year',
       yField: 'value',
@@ -32,7 +29,7 @@ const Line = (props: Props) => {
   useEffect(() => {
     init();
   }, []);
-  return <div id={props.id}></div>;
+  return <div id={id} style={style}></div>;
 };
 
 export default Line;

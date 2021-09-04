@@ -35,19 +35,20 @@ const Selector = ({ component, children }: SelectorProps) => {
         top: component.top,
         width: component.width || rect?.width,
         height: component.height || rect?.height,
-        zIndex: 999,
+        zIndex: 2,
         cursor: 'move',
         boxSizing: 'border-box',
-        border: component.active ? '1px solid #40a9ff' : '',
+        outline: component.active ? '1px solid #40a9ff' : '',
       }}
     >
-      {DIRECTION.map((d) => (
-        <div
-          className={classNames('control-point', `point-${d}`)}
-          id={d}
-          key={d}
-        ></div>
-      ))}
+      {component.active &&
+        DIRECTION.map((d) => (
+          <div
+            className={classNames('control-point', `point-${d}`)}
+            id={d}
+            key={d}
+          ></div>
+        ))}
       {children}
     </div>
   );

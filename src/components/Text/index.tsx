@@ -1,11 +1,13 @@
+import { Component } from '@/designer/store/DesignerStore';
 import React from 'react';
+import { TextProps } from '../types';
 
-interface Props {
-  text: string;
-}
-
-const Text = ({ text, ...rest }: Props) => {
-  return <span {...rest}>{text || '文本'}</span>;
+const Text = ({ text, style, ...rest }: TextProps) => {
+  return (
+    <div style={{ ...style }} {...rest}>
+      {text || '文本'}
+    </div>
+  );
 };
 
 export default Text;

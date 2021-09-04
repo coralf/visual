@@ -58,6 +58,11 @@ const components: ComponentsDragConfig[] = [
         name: '文本',
         icon: CgFormatText,
       },
+      {
+        type: 'tablePage',
+        name: '表格',
+        icon: AiOutlineTable,
+      },
     ],
   },
   {
@@ -90,13 +95,7 @@ const components: ComponentsDragConfig[] = [
   {
     type: 'advance',
     name: '高级',
-    items: [
-      {
-        type: 'tablePage',
-        name: '高级表格',
-        icon: AiOutlineTable,
-      },
-    ],
+    items: [],
   },
 ];
 

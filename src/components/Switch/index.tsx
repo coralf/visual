@@ -1,8 +1,8 @@
 import React from 'react';
 import { Switch as AntSwitch } from 'antd';
-interface Props {}
+import { CommonProps } from '../types';
 
-const Switch = (props: Props) => {
+const Switch = (props: CommonProps) => {
   return <AntSwitch {...props} />;
 };
 

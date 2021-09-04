@@ -14,13 +14,10 @@ const DropRender = (props: Props) => {
   const handleDrop: DragEventHandler = (e) => {
     e.preventDefault();
     const type = getDragComponentType(e);
-    DragEvent.draggingMove({
-      clientX: e.clientX,
-      clientY: e.clientY,
-    });
+    const rect = ref.current?.getBoundingClientRect() as DOMRect;
     designerStore.addComponent({
-      left: DragEvent.left,
-      top: DragEvent.top,
+      left: e.clientX - rect.left,
+      top: e.clientY - rect.top,
       type,
     });
   };

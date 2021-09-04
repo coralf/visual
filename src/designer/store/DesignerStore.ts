@@ -1,3 +1,4 @@
+import { ChartProps, TextProps } from '@/components/types';
 import { genUUID } from '@/utils/commonUtils';
 import { makeAutoObservable, toJS } from 'mobx';
 
@@ -12,11 +13,13 @@ export type ComponentType =
   | 'line'
   | 'column';
 
+export type Props = TextProps | ChartProps;
+
 export interface Component {
   id: string;
   name?: string;
   type: ComponentType;
-  props: object;
+  props: Props;
   children?: Component[];
   active?: boolean;
   top: number;
@@ -92,6 +95,7 @@ export class DesignerStore {
       id,
       props: {
         id,
+        style: {},
       },
       width: 0,
       height: 0,
@@ -144,8 +148,15 @@ export class DesignerStore {
 
     left && (this.activeComponent.left = left);
     top && (this.activeComponent.top = top);
-    width && (this.activeComponent.width = width);
-    height && (this.activeComponent.height = height);
+
+    if (width) {
+      this.activeComponent.width = width;
+      this.activeComponent.props.style.width = width;
+    }
+    if (height) {
+      this.activeComponent.height = height;
+      this.activeComponent.props.style.height = height;
+    }
   }
 }
 

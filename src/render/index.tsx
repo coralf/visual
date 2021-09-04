@@ -3,10 +3,15 @@ import { observer } from 'mobx-react-lite';
 import { MAPPING_CONFIG } from './mappingConfig';
 import './index.less';
 import Selector from '@/designer/components/DragEvent/Selector';
+import { toJS } from 'mobx';
 
 interface Props {
   components: Component[];
 }
+
+const RenderComponent = observer(({ props, Component }: any) => {
+  return <Component {...toJS(props)} />;
+});
 
 const renderComponents = (components: Component[]): any =>
   components?.map((component) => {
@@ -16,7 +21,7 @@ const renderComponents = (components: Component[]): any =>
     const Component = MAPPING_CONFIG[component.type];
     return (
       <Selector component={component} key={component.id}>
-        <Component {...component.props} />
+        <RenderComponent props={component.props} Component={Component} />
       </Selector>
     );
   });
