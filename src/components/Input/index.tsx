@@ -1,10 +1,19 @@
-import React from 'react';
-import { Input as AntInput } from 'antd';
+import React, { useRef } from 'react';
+import { useEffect } from 'react';
+import './index.less';
 
-interface Props {}
+interface Props {
+  [key: string]: any;
+}
 
 const Input = (props: Props) => {
-  return <AntInput {...props} />;
+  const ref = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    ref.current?.addEventListener('input', props.onChange);
+  }, []);
+
+  return <input ref={ref} className="input" {...props} />;
 };
 
 export default Input;

@@ -5,6 +5,7 @@ import { DragEventHandler, useEffect, useRef } from 'react';
 import EventHandler from '../DragEvent/EventHandler';
 import { designerStore } from '../../store/DesignerStore';
 import './index.less';
+import RenderToolBar from '../RenderToolBar';
 
 interface Props {}
 const DropRender = (props: Props) => {
@@ -15,8 +16,12 @@ const DropRender = (props: Props) => {
     const type = getDragComponentType(e);
     const rect = ref.current?.getBoundingClientRect() as DOMRect;
     designerStore.addComponent({
-      left: e.clientX * designerStore.screen.ratio - rect.left,
-      top: e.clientY * designerStore.screen.ratio - rect.top,
+      left:
+        (e.clientX - rect.left * designerStore.screen.zoom) *
+        designerStore.screen.ratio,
+      top:
+        (e.clientY - rect.top * designerStore.screen.zoom) *
+        designerStore.screen.ratio,
       type,
     });
   };
@@ -25,16 +30,21 @@ const DropRender = (props: Props) => {
     e.preventDefault();
   };
 
-  useEffect(() => {
+  const init = () => {
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Delete') {
         designerStore.deleteActiveComponent();
       }
     });
+  };
+
+  useEffect(() => {
+    init();
   }, []);
 
   return (
     <div className="drop-render-layout">
+      <RenderToolBar />
       <div
         ref={ref}
         className="drop-render"

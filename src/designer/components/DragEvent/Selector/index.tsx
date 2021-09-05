@@ -17,7 +17,7 @@ const Selector = ({ component, children }: SelectorProps) => {
     const rect = document
       .getElementById('selector-' + component.id)
       ?.getBoundingClientRect();
-    designerStore?.init(component, {
+    designerStore?.initComponent(component, {
       width: rect?.width || 0,
       height: rect?.height || 0,
     });

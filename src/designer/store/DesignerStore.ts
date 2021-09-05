@@ -1,6 +1,5 @@
-import { ChartProps, TextProps } from '@/components/types';
 import { DEFAULT_SCREEN } from '@/config/componentConfig';
-import { genUUID } from '@/utils/commonUtils';
+import { genUUID, getDefaultZoom } from '@/utils/commonUtils';
 import { makeAutoObservable, toJS } from 'mobx';
 import { Component, ComponentReact, ComponentType } from './types';
 import { Screen } from './types';
@@ -10,7 +9,7 @@ export class DesignerStore {
   screen: Screen = {
     width: DEFAULT_SCREEN.WIDTH,
     height: DEFAULT_SCREEN.HEIGHT,
-    zoom: DEFAULT_SCREEN.ZOOM,
+    zoom: getDefaultZoom(),
     ratio: DEFAULT_SCREEN.RATIO,
   };
 
@@ -26,7 +25,7 @@ export class DesignerStore {
     return this.components.find((component) => component.active);
   }
 
-  init(
+  initComponent(
     component: Component,
     {
       width,
@@ -103,6 +102,11 @@ export class DesignerStore {
       this.activeComponent.height = height;
       this.activeComponent.props.style.height = height;
     }
+  }
+
+  updateZoom(zoom: number) {
+    this.screen.zoom = zoom > 1 ? 1 : zoom;
+    this.screen.ratio = zoom < 1 ? 1 + zoom : zoom;
   }
 }
 

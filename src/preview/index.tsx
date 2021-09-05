@@ -10,9 +10,9 @@ const Preview = (props: Props) => {
 
   const updateRatio = () => {
     const designerWidth = designerStore.screen.width;
-    const screenWidth = document.body.offsetWidth;
-    if (!designerWidth || !screenWidth) return;
-    setZoom(document.body.offsetWidth / designerStore.screen.width);
+    const width = window.screen.width;
+    if (!designerWidth || !width) return;
+    setZoom(width / designerWidth);
   };
 
   useEffect(() => {
