@@ -73,12 +73,13 @@ export class DesignerStore {
   }
 
   deleteActiveComponent() {
-    this.components.splice(
-      this.components?.findIndex(
-        (item) => item.id === this.activeComponent?.id
-      ),
-      1
+    const delIdx = this.components?.findIndex(
+      (item) => item.id === this.activeComponent?.id
     );
+
+    if (delIdx !== -1) {
+      this.components.splice(delIdx, 1);
+    }
   }
 
   updateActiveComponentRect({
@@ -104,6 +105,7 @@ export class DesignerStore {
   }
 
   updateZoom(zoom: number) {
+    if (zoom <= 0) return;
     this.screen.zoom = zoom;
     this.screen.ratio = 1 / zoom;
   }
