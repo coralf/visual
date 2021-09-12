@@ -15,6 +15,7 @@ const DropRender = (props: Props) => {
     e.preventDefault();
     const type = getDragComponentType(e);
     const rect = ref.current?.getBoundingClientRect() as DOMRect;
+
     designerStore.addComponent({
       left:
         (e.clientX - rect.left * designerStore.screen.zoom) *
